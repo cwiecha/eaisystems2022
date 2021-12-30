@@ -18,7 +18,6 @@ x_train = 0
 y_train = 0
 x_val = 0
 y_val = 0
-sgd = 0
 
 model = Sequential()
 
@@ -95,44 +94,29 @@ def train():
 
     return "Train done"
 
-def score():
+def score(args):
     global score_template
 
-    x_score_array = [[ 22, 'male', 2, 'own', 'little', 'moderate', 1169, 6, 'education'  ]]
-    print(x_score_array)
+    age = args.get('Age')
+    sex = args.get('Sex')
+    job = args.get('Job')
+    housing = args.get('Housing')
+    savings = args.get('Saving acounts')
+    checking = args.get('Checking account')
+    amount = args.get('Credit amount')
+    duration = args.get('Duration')
+    purpose = args.get('Purpose')
+
+    x_score_array = [[ int(age), sex, int(job), housing, savings, checking, int(amount), int(duration), purpose  ]]
     x_score_cols = ['Age', 'Sex', 'Job', 'Housing', 'Saving accounts', 'Checking account', 'Credit amount', 'Duration', 'Purpose']
-    print(x_score_cols)
     df = pd.DataFrame( x_score_array, columns = x_score_cols )
-    print(df)
     x_score = fixup( df, False )
-    print(x_score)
-
-    #args = request.args
-    #age = args.get('Age')
-    #sex = args.get('Sex')
-    #job = args.get('Job')
-    #housing = args.get('Housing')
-    #savings = args.get('Savings')
-    #checking = args.get('Checking')
-    #amount = args.get('Amount')
-    #duration = args.get('Duration')
-    #purpose = args.get('Purpose')
-
-    #for arg in request.args:
-        # print(arg)
-
-    #x_score_array = [[ int(age), sex, int(job), housing, savings, checking, int(amount), int(duration), purpose  ]]
-    #x_score_cols = ['Age', 'Sex', 'Job', 'Housing', 'Saving accounts', 'Checking account', 'Credit amount', 'Duration', 'Purpose']
-    #df = pd.DataFrame( x_score_array, columns = x_score_cols )
-    #x_score = fixup( df, False )
 
     for col in x_score.columns:
         score_template[col] = x_score.get(col)[0]
     print( score_template )
 
-    x_score_list = []
-    for key,value in score_template.items():
-        x_score_list.append(value)
+    x_score_list = list(score_template.values())
     x_score_args = [ x_score_list ]
     print(x_score_args)
 
