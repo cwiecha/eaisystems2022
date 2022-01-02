@@ -22,7 +22,7 @@ def post_score():
        Item={
             'partition_key': "from writer",
             'sort_key': "abc",
-            'msg': "test message not yet json"
+            'Message': "test message not yet json"
             }
     )
     return response
