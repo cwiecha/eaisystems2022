@@ -6,6 +6,7 @@ from tensorflow.keras import optimizers
 from tensorflow.keras.layers import Dense, Dropout
 from pandas.api.types import is_string_dtype
 from sklearn.metrics import confusion_matrix, precision_score, recall_score
+import copy
 
 min_values = {}
 max_values = {}
@@ -122,7 +123,7 @@ def score(args):
     df = pd.DataFrame( x_score_array, columns = x_score_cols )
     x_score = fixup( df, False )
 
-    score_instance = score_template
+    score_instance = copy.deepcopy(score_template)
     for col in x_score.columns:
         score_instance[col] = x_score.get(col)[0]
     print( score_instance )
