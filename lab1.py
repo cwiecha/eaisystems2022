@@ -123,12 +123,11 @@ def score(args):
     df = pd.DataFrame( x_score_array, columns = x_score_cols )
     x_score = fixup( df, False )
 
-    score_instance = copy.deepcopy(score_template)
     for col in x_score.columns:
-        score_instance[col] = x_score.get(col)[0]
-    print( score_instance )
+        score_template[col] = x_score.get(col)[0]
+    print( score_template )
 
-    x_score_list = list(score_instance.values())
+    x_score_list = list(score_template.values())
     x_score_args = [ x_score_list ]
     print(x_score_args)
 
