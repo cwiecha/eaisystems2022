@@ -1,5 +1,7 @@
 from flask import Flask
 from flask import request
+from flask import Response
+from flask import abort
 
 app = Flask(__name__)
 
@@ -7,7 +9,7 @@ app = Flask(__name__)
 # the minimal Flask application
 @app.route('/')
 def index():
-    return '<h1>Hello, World!</h1>'
+    return Response( '<h1>Hello, World!</h1>', status=201 )
 
 
 # bind multiple URL for one view function
@@ -29,7 +31,11 @@ def greet(name):
 def post_example():
     inputs = request.args.get('res_name')
     print(inputs)
-    return('You passed in res_name = ' + inputs)
+    if ( inputs != 'credit'):
+        abort(404)
+        return("quitting")
+    else:
+        return Response('You passed in res_name = ' + inputs, status=201 )
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=4000)
