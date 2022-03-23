@@ -16,16 +16,16 @@ def index():
 @app.route('/hi')
 @app.route('/hello')
 def say_hello():
-    return '<h1>Hello, Flask!</h1>'
+    return Response('<h1>Hello, Flask!</h1>', status=201)
 
 
 # dynamic route, URL variable default
 @app.route('/greet', defaults={'name': 'Programmer'})
 @app.route('/greet/<name>')
 def greet(name):
-    ret_json = '{ "name": "' + name + '"}'
-    print(ret_json)
-    return ret_json
+    ret = 'Hello ' + name
+    print(ret)
+    return Response(ret, status=201)
 
 @app.route('/my_resource', methods=['POST', 'PUT'])
 def post_example():
