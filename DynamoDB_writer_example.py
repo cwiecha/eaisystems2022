@@ -17,7 +17,7 @@ table = dynamodb.Table('<your dynamodb table name')
 from boto3.dynamodb.conditions import Key, Attr
 
 
-def post_score(log_table, feature_string, class_string, conf_string, label):
+def post_score(log_table, feature_string, class_string, prob_string, label):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
 
@@ -27,8 +27,9 @@ def post_score(log_table, feature_string, class_string, conf_string, label):
             'sort_key': "abc",
             'Features': feature_string,
             'Class' : class_string,
-            'Confidence' : conf_string,
+            'Probability' : prob_string,
             'Label': label
             }
     )
+    return response
 
