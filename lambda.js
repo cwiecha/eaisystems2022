@@ -24,12 +24,25 @@ exports.handler = (event, context, callback) => {
                     "partition_key" : record.dynamodb.NewImage.partition_key.S,
                     "sort_key" : record.dynamodb.NewImage.sort_key.S,
                     "Class": record.dynamodb.NewImage.Class.S,
-                    "Confidence": record.dynamodb.NewImage.Confidence.S,
+                    "Probability": record.dynamodb.NewImage.Probability.S,
                     "Label": record.dynamodb.NewImage.Label.S,
                     "Features": record.dynamodb.NewImage.Features.S
                 }
+            };
+            var int_class = parseInt(record.dynamodb.NewImage.Class.S);
+            var float_probability = parseFloat(record.dynamodb.NewImage.Probability.S);
+            var gap = 0;
+            
+            if ( int_class == 0 )
+            {
+                gap = float_probability;
             }
-            createItem(params)
+            else
+            {
+                gap = 1 - float_probability;
+            };
+            if ( gap > 0.25 )
+               createItem(params)
         }
     }),
     
