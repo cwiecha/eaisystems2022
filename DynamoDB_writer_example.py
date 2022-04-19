@@ -19,7 +19,7 @@ from boto3.dynamodb.conditions import Key, Attr
 
 def post_score(log_table, feature_string, class_string, prob_string, label):
     now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
+    current_time = datetime.utcnow().strftime('%H:%M:%S.%f')[:-3]
 
     response = log_table.put_item(
        Item={
